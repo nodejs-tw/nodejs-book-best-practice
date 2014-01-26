@@ -105,3 +105,80 @@ let (g = <<expr>>) {
   result
 }
 ```
+
+## Generators 解決 Flow Control
+
+Generators 他有一個可暫停 Scope 的特性，所以用他來解決 async 的問題會非常適合，不需要再給一個 callback 讓程式碼變得很多層，不易閱讀，像是這樣
+
+```javascript
+var content = readFile('./hello.txt', 'utf8');
+```
+
+而不是傳統的
+
+```javascript
+readFile('./hello.txt', 'utf8', function (err, content) {
+  // ...
+});
+```
+
+### 常見 Library，與他們的實現方法
+
+既然這是一個棒的異步問題解決方案當然就有很多的 Library 了，一些有名的 Flow Control Library 都有包含這種新寫法。
+
+[Q](https://github.com/kriskowal/q)
+Q 的作法是利用他自己本身的特色 Promises 搭配 Generators 使用，我們想像一個巢狀 callback 然後每個 callback 都回傳 promise，最裡面那層直接回傳資料，錯誤的時候就直接丟給 Generator.throw()，這就是 Q 的整個實作概念。
+
+```javascript
+var errorCallback = generator.throw.bind(generator);
+var promise = (function () {
+  //...
+  return Q(ret.value).then(function () {
+    //...
+    return Q(ret.value).then(function () {
+      //...
+      return value;
+    }, errorCallback);
+  }, errorCallback);
+})();
+```
+
+這個作法充分利用了 Promises 的特性所以整段程式碼非常簡短，也讓包裝傳統 NodeJS 的 Callback 寫法也很方便。
+
+Q 的使用方法
+
+* Q.async(GeneratorFunction)
+* Q.spawn(GeneratorFunction) — 只是把 async 包裝一下讓 async 立刻執行然後結束 Promise 鏈
+
+```javascript
+Q.async(function *() {
+  return yield Q.nfcall(fs.readFile, './hello.txt', 'utf-8');
+}).then(function (content) {
+  console.log(content);
+});
+```
+
+[co](https://github.com/visionmedia/co)
+
+co 是一個專門用 Genertoars 處理 Flow Control 問題的 NodeJS module，用法上比較彈性，我們可以 yield Object, Array, Promise, [thunk](http://en.wikipedia.org/wiki/Thunk_%28functional_programming%29) 或 Generator, GeneratorFunction，還記得前面提到的 yield, yield* 嗎？這邊我們不需要使用 yiled* 就可以使用 Generator，co 內部判斷如果 yiled 是一個 Generator 的話他就會自己再呼叫一次 co 去執行這個 Generator。
+
+整個 co 作的事情其實就是 EcmaScript Wiki 上面那段 yield 解釋 yield* 程式碼所要作的事情，只是包裝的更完整，更彈性，所以就不再作其他說明了。
+
+co 的使用方法
+
+```javascript
+var readFile = function (path, encoding) {
+  return function (fn) {
+    fs.readFile(path, encoding, cb);
+  };
+};
+
+co(function * () {
+  // 傳統 callback 的方法改成給 co 使用
+  var file1Content = yield readFile('./file1', 'utf8');
+  // promise
+  var file2Content = yield Q.nfcall(fs.readFile, './file2', 'utf8');
+  // array
+  var contentArray = yield [readFile('./file1', 'utf8'), readFile('./file2', 'utf8')];
+})();
+```
