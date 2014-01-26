@@ -1,7 +1,4 @@
-title: Generators
-description: NodeJS ES6 Generators
-authors: ['Po-Ying Chen <poying.me@gmail.com>']
----
+# Generators
 
 ## 語法
 
