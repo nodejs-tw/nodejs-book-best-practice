@@ -20,6 +20,7 @@
 | export | export |
 | closure | 封包 |
 | CommonJS | ComonJS |
+| Framework | 框架 |
 
 
 ##中英文混雜
