@@ -1,8 +1,3 @@
-title: Generators
-description: NodeJS ES6 Generators
-authors: ['Po-Ying Chen <poying.me@gmail.com>']
----
-
 ## 語法
 
 ### GeneratorFunction, Generator
