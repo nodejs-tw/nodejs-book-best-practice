@@ -1,0 +1,9 @@
+{
+  "generator": {
+    "column": {
+      "template": "./templates/column.jade",
+      "source": "./src/**/*.md",
+      "destination": "./out/"
+    }
+  }
+}

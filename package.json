@@ -1,0 +1,33 @@
+{
+  "name": "nodejs-book-best-practice",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "grunt",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gen": "node ./tools/generator/index.js"
+  },
+  "keywords": [
+    "nodejs",
+    "taiwan"
+  ],
+  "author": "Po-Ying Chen (poying.me@gmail.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-livescript": "~0.5.1",
+    "grunt-contrib-stylus": "~0.11.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-jade": "~0.8.0",
+    "grunt-contrib-copy": "~0.4.1"
+  },
+  "dependencies": {
+    "js-yaml": "~3.0.1",
+    "marked": "~0.3.0",
+    "pygmentize-bundled": "~2.1.0",
+    "mkdirp": "~0.3.5",
+    "jade": "~1.0.2",
+    "colors": "~0.6.2"
+  }
+}
