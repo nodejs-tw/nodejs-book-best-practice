@@ -18,7 +18,7 @@
 | package | package|
 | module | 模組 |
 | export | export |
-| closure | 封包 |
+| closure | 閉包 |
 | CommonJS | ComonJS |
 | Framework | 框架 |
 
