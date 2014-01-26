@@ -14,6 +14,7 @@
 | --- | ---|
 | Node.js | Node.js |
 | JavaScript | JavaScript|
+| ECMAScript | ECMAScript|
 | npm | npm |
 | package | package|
 | module | 模組 |
