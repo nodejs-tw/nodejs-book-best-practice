@@ -127,6 +127,7 @@ readFile('./hello.txt', 'utf8', function (err, content) {
 既然這是一個棒的異步問題解決方案當然就有很多的 Library 了，一些有名的 Flow Control Library 都有包含這種新寫法。
 
 [Q](https://github.com/kriskowal/q)
+
 Q 的作法是利用他自己本身的特色 Promises 搭配 Generators 使用，我們想像一個巢狀 callback 然後每個 callback 都回傳 promise，最裡面那層直接回傳資料，錯誤的時候就直接丟給 Generator.throw()，這就是 Q 的整個實作概念。
 
 ```javascript
@@ -180,5 +181,27 @@ co(function * () {
   var file2Content = yield Q.nfcall(fs.readFile, './file2', 'utf8');
   // array
   var contentArray = yield [readFile('./file1', 'utf8'), readFile('./file2', 'utf8')];
+})();
+```
+
+[suspend](https://github.com/jmar777/suspend)
+
+在使用 Generators, Promises 之前我們一定都用過傳統的 Callback 方式，suspend 就是使用這種思考模式去使用 Generators，我們不再丟 callback 進去某個 async 方法，而改丟 suspend 的方法(resume) 進去，整個作法很直覺，但是這個作法有個 ”宿命”，他無法並行多個 async 的方法，一次只能作一件事情，所以 suspend 就又多了兩個方法 fork, join，用 fork 當作 async 的 callback，最後再用 join 來取得資料，就這個份來說我就不太喜歡他了。那 join, fork 是怎麼實作的？在 fork 的時候他可以知道有多少個異步動作開始執行，當動作完成時也可以透過 callback 知道有多少個動作已經完成，如果在 join 之前所有事情都做完了他就不用作任何其他處理，放心給 join 去取資料，但如果來不及，他就會忽略第一次的 join，等待所有事情處理完後再 join，所以 join 必須被 yield，這也是傳統上常見的異步處理手法。
+
+```javascript
+suspend(function*() {
+  var fileNames = yield fs.readdir('test', suspend.resume());
+
+  fileNames.forEach(function(fileName) {
+    fs.readFile('test/' + fileName, 'utf8', suspend.fork());
+  });
+
+  var files = yield suspend.join();
+
+  var numTests = files.reduce(function(cur, prev) {
+    return cur + prev.match(/it\(/g).length;
+  }, 0);
+
+  console.log('There are %s tests', numTests);
 })();
 ```
