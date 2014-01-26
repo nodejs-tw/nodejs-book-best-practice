@@ -76,7 +76,7 @@ __輸出__
 { value: 'bar', done: false }
 ```
 
-yield* 跟 yield 只差在他們後面所帶的資料，yield* 後面可以帶一個 Generator，他會自動幫我們把兩個 Generator 串起來，在 EcmaScript 的 [Wiki](http://wiki.ecmascript.org/doku.php?id=harmony:generators) 上有段程式碼在說明如何用 yield 做到跟 yield* 一樣的事情。
+yield* 跟 yield 只差在他們後面所帶的資料，yield* 後面可以帶一個 Generator，他會自動幫我們把兩個 Generator 串起來，在 ECMAScript 的 [Wiki](http://wiki.ecmascript.org/doku.php?id=harmony:generators) 上有段程式碼在說明如何用 yield 做到跟 yield* 一樣的事情。
 
 ```javascript
 let (g = <<expr>>) {
@@ -160,7 +160,7 @@ Q.async(function *() {
 
 co 是一個專門用 Genertoars 處理 Flow Control 問題的 NodeJS module，用法上比較彈性，我們可以 yield Object, Array, Promise, [thunk](http://en.wikipedia.org/wiki/Thunk_%28functional_programming%29) 或 Generator, GeneratorFunction，還記得前面提到的 yield, yield* 嗎？這邊我們不需要使用 yiled* 就可以使用 Generator，co 內部判斷如果 yiled 是一個 Generator 的話他就會自己再呼叫一次 co 去執行這個 Generator。
 
-整個 co 作的事情其實就是 EcmaScript Wiki 上面那段 yield 解釋 yield* 程式碼所要作的事情，只是包裝的更完整，更彈性，所以就不再作其他說明了。
+整個 co 作的事情其實就是 ECMAScript Wiki 上面那段 yield 解釋 yield* 程式碼所要作的事情，只是包裝的更完整，更彈性，所以就不再作其他說明了。
 
 co 的使用方法
 
