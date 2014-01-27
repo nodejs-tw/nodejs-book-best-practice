@@ -10,18 +10,21 @@
 
 技術類專有名詞依循官方常見用法。
  
-| English | 中文翻譯 |
-| --- | ---|
-| Node.js | Node.js |
-| JavaScript | JavaScript|
-| ECMAScript | ECMAScript|
-| npm | npm |
-| package | package|
-| module | 模組 |
-| export | export |
-| closure | 閉包 |
-| CommonJS | ComonJS |
-| Framework | 框架 |
+| English | 中文翻譯 | 程式碼 |
+| --- | --- | --- |
+| Node.js | Node.js | - |
+| JavaScript | JavaScript| - |
+| ECMAScript | ECMAScript| - |
+| npm | npm | - |
+| package | package | - |
+| module | 模組 | - |
+| export | export | - |
+| closure | 閉包 | - |
+| CommonJS | ComonJS | - |
+| Framework | 框架 | - |
+| Immediately-Invoked Function Expression | 立即函式 | (function () {})(); |
+| - | 具名函式 | function fnName() {} |
+| - | 匿名函式 | var fn = function () {}; |
 
 
 ##中英文混雜
